@@ -48,6 +48,11 @@ class Inline4File:
 		self.putln()
 
 		for iface_spec in self.spec_file.interfaces_spec():
+			inline4_status = iface_spec.get('inline4')
+			if inline4_status == 'no':
+				# Skip interfaces which should not be inlined.
+				continue
+
 			iface_name  = iface_spec.attrib['name']
 			global_name = iface_spec.attrib['global']
 
@@ -137,7 +142,9 @@ class Inline4File:
 			name = spec.text.strip()
 			self.putln('#include <' + name + '>')
 
-		self.putln('#include <interfaces/exec.h>')
+		for spec in self.spec_file.inline4_includes_spec():
+			name = spec.text.strip()
+			self.putln('#include <' + name + '>')
 
 	def put_method_macro_params(self, method_spec, is_gcc2=False):
 		num_args = 0

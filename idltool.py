@@ -33,8 +33,8 @@ import os
 import xml.etree.ElementTree as xml
 
 # Version strings.
-verstag = '$VER: idltools.py 54.3 (1.2.2021)'
-version = '54.3'
+verstag = '$VER: idltools.py 54.4 (4.2.2021)'
+version = '54.4'
 
 # Output directory for all code generation.
 outdir = os.getcwd()
@@ -128,11 +128,11 @@ class SpecFile:
 	def library_spec(self):
 		return self.library
 
-	def library_spec(self):
-		return self.library
-
 	def includes_spec(self):
 		return self.library.findall('include')
+
+	def inline4_includes_spec(self):
+		return self.library.findall('inline4include')
 
 	def m68k_includes_spec(self):
 		return self.library.findall('m68kinclude')
