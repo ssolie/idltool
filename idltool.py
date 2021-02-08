@@ -33,8 +33,8 @@ import os
 import xml.etree.ElementTree as xml
 
 # Version strings.
-verstag = '$VER: idltools.py 54.4 (4.2.2021)'
-version = '54.4'
+verstag = '$VER: idltools.py 54.5 (8.2.2021)'
+version = '54.5'
 
 # Output directory for all code generation.
 outdir = os.getcwd()

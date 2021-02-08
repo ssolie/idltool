@@ -184,7 +184,7 @@ class Inline4File:
 			if is_gcc2:
 				self.put('## vargs')
 			else:
-				self.put('__VA_ARGS__')
+				self.put('## __VA_ARGS__')
 
 	def put_footer(self, guard_name):
 		self.putln('#endif /* ' + guard_name + ' */')
