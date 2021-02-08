@@ -3,6 +3,10 @@ Python 2.5 and higher tool to generate code from an Amiga-style interface descri
 
 The interface is similar to the original proprietary idltool in functionality but not all features are implemented and new features have been added.
 
+# Credits
+- Steven Solie
+- Fredrik Wikström
+
 # Changelog
 
 ## 54.5 (8.2.2021)
