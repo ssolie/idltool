@@ -9,6 +9,9 @@ The interface is similar to the original proprietary idltool in functionality bu
 
 # Changelog
 
+## 54.6 (13.2.2021)
+- Another fix for inline4 varargs macro generation.
+
 ## 54.5 (8.2.2021)
 - Created this log.
 - Fixed inline4 varargs macro generation.

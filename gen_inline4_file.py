@@ -161,7 +161,7 @@ class Inline4File:
 			if num_args > 0:
 				self.put(', ')
 
-			if is_gcc2 and num_args > 0:
+			if is_gcc2:
 				self.put('vargs')
 
 			self.put('...')
@@ -179,12 +179,12 @@ class Inline4File:
 		vararg_spec = method_spec.find('vararg')
 		if vararg_spec != None:
 			if num_args > 0:
-				self.put(', ')
+				self.put(', ## ')
 
 			if is_gcc2:
-				self.put('## vargs')
+				self.put('vargs')
 			else:
-				self.put('## __VA_ARGS__')
+				self.put('__VA_ARGS__')
 
 	def put_footer(self, guard_name):
 		self.putln('#endif /* ' + guard_name + ' */')
