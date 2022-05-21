@@ -1,7 +1,7 @@
 # This script is a codegen module for idltool.py.
 #
 # gen_inline4_file.py - Generates include/inline4/<libname>.h files
-# Copyright (C) 2021 Steven Solie
+# Copyright (C) 2021,2022 Steven Solie
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -82,25 +82,12 @@ class Inline4File:
 
 				vararg_spec = method.find('vararg')
 
-				if vararg_spec != None:
-					self.putln('#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) || (__GNUC__ >= 3)')
-
 				self.put('#define ' + method_name + '(')
 				self.put_method_macro_params(method)
 				self.put(') ')
 				self.put(global_name + '->' + method_name + '(')
 				self.put_method_macro_args(method)
 				self.putln(')')
-
-				if vararg_spec != None:
-					self.putln('#elif (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)')
-					self.put('#define ' + method_name + '(')
-					self.put_method_macro_params(method, True)
-					self.put(') ')
-					self.put(global_name + '->' + method_name + '(')
-					self.put_method_macro_args(method, True)
-					self.putln(')')
-					self.putln('#endif')
 
 			self.putln()
 
@@ -146,7 +133,7 @@ class Inline4File:
 			name = spec.text.strip()
 			self.putln('#include <' + name + '>')
 
-	def put_method_macro_params(self, method_spec, is_gcc2=False):
+	def put_method_macro_params(self, method_spec):
 		num_args = 0
 		for arg_spec in method_spec.findall('arg'):
 			if num_args > 0:
@@ -161,12 +148,9 @@ class Inline4File:
 			if num_args > 0:
 				self.put(', ')
 
-			if is_gcc2:
-				self.put('vargs')
-
 			self.put('...')
 
-	def put_method_macro_args(self, method_spec, is_gcc2=False):
+	def put_method_macro_args(self, method_spec):
 		num_args = 0
 		for arg_spec in method_spec.findall('arg'):
 			if num_args > 0:
@@ -179,12 +163,9 @@ class Inline4File:
 		vararg_spec = method_spec.find('vararg')
 		if vararg_spec != None:
 			if num_args > 0:
-				self.put(', ## ')
+				self.put(', ')
 
-			if is_gcc2:
-				self.put('vargs')
-			else:
-				self.put('__VA_ARGS__')
+			self.put('__VA_ARGS__')
 
 	def put_footer(self, guard_name):
 		self.putln('#endif /* ' + guard_name + ' */')

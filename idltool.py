@@ -1,5 +1,8 @@
 #!/usr/bin/python
 #
+# idltool.py - Code generates from Amiga-style interface description
+# Copyright (C) 2021,2022 Steven Solie
+# 
 # This script parses Amiga-style interface descriptions and outputs various
 # pieces of code.
 #
@@ -10,9 +13,6 @@
 #
 # Compatible with Python 2.5 and higher.
 #
-# 
-# idltool.py - Code generates from Amiga-style interface description
-# Copyright (C) 2021 Steven Solie
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ import os
 import xml.etree.ElementTree as xml
 
 # Version strings.
-verstag = '$VER: idltools.py 54.6 (13.2.2021)'
-version = '54.6'
+version = '54.7'
+verstag = '$VER: idltool.py ' + version + ' (21.5.2022)'
 
 # Output directory for all code generation.
 outdir = os.getcwd()
@@ -119,8 +119,9 @@ class SpecFile:
 		"""
 		try:
 			self.tree = xml.parse(filename)
-		except:
+		except Exception as e:
 			print('bad interface description file')
+			print(e)
 			exit(1)
 
 		self.library = self.tree.getroot()
