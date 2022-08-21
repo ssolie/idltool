@@ -80,8 +80,6 @@ class Inline4File:
 					# Skip excluded methods common to all interfaces.
 					continue
 
-				vararg_spec = method.find('vararg')
-
 				self.put('#define ' + method_name + '(')
 				self.put_method_macro_params(method)
 				self.put(') ')
@@ -134,16 +132,23 @@ class Inline4File:
 			self.putln('#include <' + name + '>')
 
 	def put_method_macro_params(self, method_spec):
+		vararg_spec = method_spec.find('vararg')
+
+		# Variadic macros suppress the next to last arg if present
+		# to work around the trailing comma issue.
+		if vararg_spec != None:
+			method_spec = method_spec[:-2]
+
 		num_args = 0
-		for arg_spec in method_spec.findall('arg'):
+		for arg_spec in method_spec:
 			if num_args > 0:
 				self.put(', ')
 
-			arg_name = arg_spec.attrib['name']
-			self.put(arg_name)
+			param_name = arg_spec.attrib['name']
+			self.put(param_name)
+
 			num_args += 1
 
-		vararg_spec = method_spec.find('vararg')
 		if vararg_spec != None:
 			if num_args > 0:
 				self.put(', ')
@@ -151,16 +156,23 @@ class Inline4File:
 			self.put('...')
 
 	def put_method_macro_args(self, method_spec):
+		vararg_spec = method_spec.find('vararg')
+
+		# Variadic macros suppress the next to last arg if present
+		# to work around the trailing comma issue.
+		if vararg_spec != None:
+			method_spec = method_spec[:-2]
+
 		num_args = 0
-		for arg_spec in method_spec.findall('arg'):
+		for arg_spec in method_spec:
 			if num_args > 0:
 				self.put(', ')
 
 			arg_name = arg_spec.attrib['name']
 			self.put('(' + arg_name + ')')
+
 			num_args += 1
 
-		vararg_spec = method_spec.find('vararg')
 		if vararg_spec != None:
 			if num_args > 0:
 				self.put(', ')

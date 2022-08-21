@@ -33,8 +33,8 @@ import os
 import xml.etree.ElementTree as xml
 
 # Version strings.
-version = '54.7'
-verstag = '$VER: idltool.py ' + version + ' (21.5.2022)'
+version = '54.8'
+verstag = '$VER: idltool.py ' + version + ' (21.8.2022)'
 
 # Output directory for all code generation.
 outdir = os.getcwd()
@@ -119,9 +119,9 @@ class SpecFile:
 		"""
 		try:
 			self.tree = xml.parse(filename)
-		except Exception as e:
+		except Exception:
 			print('bad interface description file')
-			print(e)
+			print(sys.exc_info()[1])
 			exit(1)
 
 		self.library = self.tree.getroot()
